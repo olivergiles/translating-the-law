@@ -1,5 +1,5 @@
 from pandas_jsonlines.read_jsonlines import read_jsonlines
-from get_case import get_case
+from translating_the_law.downloading.get_case import get_case
 import pandas as pd
 import numpy as np
 import os

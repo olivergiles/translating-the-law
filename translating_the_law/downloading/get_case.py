@@ -1,7 +1,7 @@
-from download import get_case_files
-from remove import delete_case_files
-from extract import extract_all
-from parse import parse_all
+from translating_the_law.downloading.download import get_case_files
+from translating_the_law.downloading.remove import delete_case_files
+from translating_the_law.downloading.extract import extract_all
+from translating_the_law.downloading.parse import parse_all
 
 def get_case(base_url):
     pdf_url = base_url.replace('.html', '-judgment.pdf').replace('cases/', 'cases/docs/')
