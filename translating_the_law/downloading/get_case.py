@@ -10,7 +10,7 @@ def get_case(base_url):
     get_case_files(case, summary_url, pdf_url)
     j , ps = extract_all(case)
     delete_case_files(case)
-    return parse_all(j, ps)
+    return parse_all(j, ps, summary_url)
 
 if __name__ == "__main__":
     test = get_case('https://www.supremecourt.uk/cases/uksc-2009-0119.html')

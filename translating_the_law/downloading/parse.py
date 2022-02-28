@@ -4,7 +4,7 @@ def judgement_to_dict(judgement):
     judgement = judgement.replace("\n", "").strip()
     return {"body":judgement}
 
-def summary_to_dict(summary):
+def summary_to_dict(summary, summary_url):
     summary_regex = r"PRESS SUMMARY(.*)JUSTICES:(.*)BACKGROUND TO THE APPEAL(.*)JUDGMENT(.*)REASONS FOR THE JUDGMENT(.*)"
     summary = summary.replace("\n", "").strip()
     search = re.search(summary_regex,summary,flags=re.M)
@@ -16,9 +16,9 @@ def summary_to_dict(summary):
             "Judgment":search.group(4).strip(),
             "Reasons for the judgment":search.group(5).strip()
         }
-    return {"error":"cannot parse"}
+    return {"error": summary_url}
 
-def parse_all(judgement, summary):
+def parse_all(judgement, summary, summary_url):
     j = judgement_to_dict(judgement)
-    ps = summary_to_dict(summary)
+    ps = summary_to_dict(summary, summary_url)
     return {'judgement':j, 'press summary':ps}
