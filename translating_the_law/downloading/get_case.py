@@ -8,7 +8,7 @@ def get_case(base_url):
     summary_url = base_url.replace('.html', '-press-summary.pdf').replace('cases/', 'cases/docs/')
     case = base_url.replace('.html', '').replace('https://www.supremecourt.uk/cases/','')
     post2016 = False
-    if base_url[39:43] >= 2017:
+    if int(base_url[39:43]) >= 2017:
         post2016 = True
     get_case_files(case, summary_url, pdf_url, post2016)
     j , ps = extract_all(case, post2016)
