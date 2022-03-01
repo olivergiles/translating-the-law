@@ -7,7 +7,7 @@ def extract_judgement(case):
     judgement = extract_text(main_text_file)
     return judgement
 
-def extract_press_summary(case, post2016=False):
+def extract_press_summary(case, post2016):
     if not post2016:
         press_summary_file = f"{case}-press-summary.pdf"
         summary = extract_text(press_summary_file)
@@ -47,10 +47,10 @@ def extract_press_summary(case, post2016=False):
             summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
     return summary
 
-def extract_all(case, post2016=False):
+def extract_all(case, post2016):
     j = extract_judgement(case)
     ps = extract_press_summary(case, post2016)
     return j, ps
 
 if __name__ == "__main__":
-    print(extract_press_summary('uksc-2021-0062', post2016=True))
+    print(extract_press_summary('uksc-2021-0062', True))
