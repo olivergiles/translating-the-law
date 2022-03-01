@@ -10,9 +10,9 @@ def get_case(base_url):
     post2016 = False
     if int(base_url[39:43]) >= 2017:
         post2016 = True
-    get_case_files(case, summary_url, pdf_url, post2016)
-    j , ps = extract_all(case, post2016)
-    delete_case_files(case, post2016)
+    get_case_files(case, summary_url, pdf_url, post2016=post2016)
+    j , ps = extract_all(case, post2016=post2016)
+    delete_case_files(case, post2016=post2016)
     return parse_all(j, ps, summary_url)
 
 if __name__ == "__main__":
