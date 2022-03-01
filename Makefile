@@ -53,3 +53,6 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+clean_up_pdf:
+	@find . -name "*.pdf" -type f -delete
