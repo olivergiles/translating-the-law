@@ -29,3 +29,4 @@ memoized-property
 termcolor
 pandas-jsonlines
 pdfminer.six
+bs4
