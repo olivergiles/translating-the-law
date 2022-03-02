@@ -11,10 +11,11 @@ def get_case(base_url):
     if int(base_url[39:43]) >= 2017:
         year_bool = True
     get_case_files(case, summary_url, pdf_url, year_bool)
-    j , ps = extract_all(case, year_bool)
+    j , ps , d = extract_all(case, year_bool)
     delete_case_files(case, year_bool)
-    return parse_all(j, ps, summary_url)
+    return parse_all(j, ps, summary_url, d)
 
 if __name__ == "__main__":
     test = get_case('https://www.supremecourt.uk/cases/uksc-2009-0119.html')
-    print(test)
+    test2 = get_case('https://www.supremecourt.uk/cases/uksc-2011-0110.html')
+    print(test2)

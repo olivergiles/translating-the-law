@@ -18,7 +18,8 @@ def summary_to_dict(summary, summary_url):
         }
     return {"error": summary_url}
 
-def parse_all(judgement, summary, summary_url):
+def parse_all(judgement, summary, summary_url, details):
     j = judgement_to_dict(judgement)
     ps = summary_to_dict(summary, summary_url)
-    return {'judgement':j, 'press summary':ps}
+    d = details
+    return {'judgement':j, 'press summary':ps, 'details':d}
