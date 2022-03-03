@@ -49,7 +49,7 @@ def extract_press_summary(case, post2016):
     return summary
 
 def extract_details(case):
-    url = f"https://www.supremecourt.uk/press-summary/{case}.html"
+    url = f"https://www.supremecourt.uk/cases/{case}.html"
     html = requests.get(url).content
     soup = BeautifulSoup(html, 'html.parser')
     strips = list(soup.stripped_strings)
@@ -67,4 +67,5 @@ def extract_all(case, post2016):
     return j, ps, d
 
 if __name__ == "__main__":
+    print(extract_details('uksc-2011-0110'))
     print(extract_press_summary('uksc-2021-0062', True))
