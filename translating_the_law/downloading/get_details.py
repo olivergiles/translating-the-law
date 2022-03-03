@@ -21,7 +21,6 @@ def details_new(strips):
 
 def details_old(strips):
     details = {}
-    print(strips)
     if 'Neutral citation number' in strips:
         cit = strips.index('Neutral citation number')
     else:
@@ -34,4 +33,28 @@ def details_old(strips):
     details['Judgment date'] = ', '.join(strips[date+1:cit])
     details['Neutral citation'] = ', '.join(strips[cit+1:caseid])
     details['Justices'] = strips[justices+1]
+    return details
+
+def addl_details(strips):
+    details = {}
+    caseid = strips.index('Case summary')
+    if 'Issue' in strips:
+        issues = strips.index('Issue')
+    else:
+        issues = strips.index('Issue(s)')
+    facts = strips.index('Facts')
+    prev = strips.index('Judgment appealed')
+    start = strips.index('Hearing start date')
+    finish = strips.index('Hearing finish date')
+    if 'Case ID:' in strips[caseid-1] and 'UKSC' in strips[caseid-1]:
+        details['Case ID'] = strips[caseid-1].replace('Case ID: ', '')
+    elif 'Case ID:' in strips[caseid-1]:
+        details['Case ID'] = strips[caseid-1].replace('Case ID:', 'UKSC')
+    else:
+        details['Case ID'] = strips[caseid-1]
+    details['Issue'] = ' '.join(strips[issues+1:facts])
+    details['Facts'] = ' '.join(strips[facts+1:prev])
+    details['Judgment appealed'] = strips[prev+1]
+    details['Hearing start date'] = strips[start+1]
+    details['Hearing finish date'] = strips[finish+1]
     return details
