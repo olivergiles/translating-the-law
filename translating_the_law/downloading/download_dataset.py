@@ -65,21 +65,13 @@ def alt_extract_press_summary(case, html_link=None):
             judgment = 0
             reasons = 0
             if strip == "Justices":
-                print(i)
                 judges = i
-                print(strip)
             elif strip == "Background to the Appeal":
-                print(i)
                 background = i
-                print(strip)
             elif strip == "Judgment":
-                print(i)
                 judgment = i
-                print(strip)
             elif strip == "Reasons for the Judgment":
-                print(i)
                 reasons = i
-                print(strip)
             summary["Press summary"] = "".join(strips[:judges])
             summary["Justices"] = "".join(strips[judges+1:background])
             summary["Background to the appeal"] = "".join(strips[background+1:judgment])
