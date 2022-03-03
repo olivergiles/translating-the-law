@@ -200,10 +200,13 @@ def download_dataset(test=False):
         i += 1
         if test and i>=5:
             break
-        alt_get_case_files(case)
-        j, ps, d = alt_extract_all(case)
-        data.append(parse_all(j, ps, case['summary'],d))
-        alt_delete_case_files(case)
+        try:
+            alt_get_case_files(case)
+            j, ps, d = alt_extract_all(case)
+            data.append(parse_all(j, ps, case['summary'],d))
+            alt_delete_case_files(case)
+        except:
+            print(case)
     json_string = json.dumps(data)
     with open(save_path, 'w') as outfile:
         json.dump(json_string, outfile)
