@@ -1,4 +1,5 @@
 from pdfminer.high_level import extract_text
+from translating_the_law.downloading.get_details import details_new, details_old
 from bs4 import BeautifulSoup
 import requests
 
@@ -47,10 +48,24 @@ def extract_press_summary(case, post2016):
             summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
     return summary
 
+def extract_details(case):
+    url = f"https://www.supremecourt.uk/cases/{case}.html"
+    html = requests.get(url).content
+    soup = BeautifulSoup(html, 'html.parser')
+    strips = list(soup.stripped_strings)
+    if 'Facts' in strips:
+        details = details_new(strips)
+    else:
+        details = details_old(strips)
+    details['URL'] = url
+    return details
+
 def extract_all(case, post2016):
     j = extract_judgement(case)
     ps = extract_press_summary(case, post2016)
-    return j, ps
+    d = extract_details(case)
+    return j, ps, d
 
 if __name__ == "__main__":
+    print(extract_details('uksc-2011-0110'))
     print(extract_press_summary('uksc-2021-0062', True))
