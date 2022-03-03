@@ -30,3 +30,9 @@ termcolor
 pandas-jsonlines
 pdfminer.six
 bs4
+
+#scraping
+scrapy
+
+#product
+streamlit
