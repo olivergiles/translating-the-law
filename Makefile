@@ -73,3 +73,8 @@ heroku_create_app:
 deploy_heroku:
 	-@git push heroku master
 	-@heroku ps:scale web=1
+
+# Download
+
+download_data:
+	@python3 translating_the_law/downloading/download_dataset.py    
