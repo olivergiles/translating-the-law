@@ -1,5 +1,5 @@
 from pdfminer.high_level import extract_text
-from translating_the_law.downloading.get_details import details_new, details_old
+from translating_the_law.downloading.get_details import details_new, details_old, addl_details
 from bs4 import BeautifulSoup
 import requests
 
@@ -52,11 +52,24 @@ def extract_details(case):
     details['URL'] = url
     return details
 
+def extract_additional(case):
+    url = f"https://www.supremecourt.uk/cases/{case}.html"
+    html = requests.get(url).content
+    soup = BeautifulSoup(html, 'html.parser')
+    strips = list(soup.stripped_strings)
+    if 'Facts' in strips:
+        details = addl_details(strips)
+    else:
+        return 'No additional details available for this case'
+    details['URL'] = url
+    return details
+
 def extract_all(case, post2016):
     j = extract_judgement(case)
     ps = extract_press_summary(case, post2016)
     d = extract_details(case)
-    return j, ps, d
+    ad = extract_additional(case)
+    return j, ps, d, ad
 
 if __name__ == "__main__":
     print(extract_details('uksc-2011-0110'))
