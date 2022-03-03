@@ -20,7 +20,10 @@ def summary_to_dict(summary, summary_url):
 
 def parse_all(judgement, summary, summary_url, details, addl):
     j = judgement_to_dict(judgement)
-    ps = summary_to_dict(summary, summary_url)
+    if type(summary) != dict:
+        ps = summary_to_dict(summary, summary_url)
+    else:
+        ps = summary
     d = details
     ad = addl
     return {'judgement':j, 'press summary':ps, 'details':d, 'additional':ad}
