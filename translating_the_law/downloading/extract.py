@@ -73,4 +73,4 @@ def extract_all(case, post2016):
 
 if __name__ == "__main__":
     print(extract_details('uksc-2011-0110'))
-    #print(extract_press_summary('uksc-2021-0062', True))
+    print(extract_press_summary('uksc-2021-0062', True))

@@ -17,5 +17,5 @@ def get_case(base_url):
 
 if __name__ == "__main__":
     test = get_case('https://www.supremecourt.uk/cases/uksc-2009-0119.html')
-    test2 = get_case('https://www.supremecourt.uk/cases/uksc-2021-0160.html')
+    test2 = get_case('https://www.supremecourt.uk/cases/uksc-2021-0063.html')
     print(test2['details'], test2['additional'])

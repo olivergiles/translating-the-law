@@ -43,7 +43,10 @@ def addl_details(strips):
     else:
         issues = strips.index('Issue(s)')
     facts = strips.index('Facts')
-    prev = strips.index('Judgment appealed')
+    if 'Judgment appealed' in strips:
+        prev = strips.index('Judgment appealed')
+    else:
+        prev = strips.index('Parties')
     start = strips.index('Hearing start date')
     finish = strips.index('Hearing finish date')
     if 'Case ID:' in strips[caseid-1] and 'UKSC' in strips[caseid-1]:
@@ -54,7 +57,10 @@ def addl_details(strips):
         details['Case ID'] = strips[caseid-1]
     details['Issue'] = ' '.join(strips[issues+1:facts])
     details['Facts'] = ' '.join(strips[facts+1:prev])
-    details['Judgment appealed'] = strips[prev+1]
+    if 'Judgment appealed' in strips:
+        details['Judgment appealed'] = strips[prev+1]
+    else:
+        pass
     details['Hearing start date'] = strips[start+1]
     details['Hearing finish date'] = strips[finish+1]
     return details
