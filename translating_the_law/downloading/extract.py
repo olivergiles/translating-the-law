@@ -19,32 +19,24 @@ def extract_press_summary(case, post2016):
             script.decompose()
         strips = list(soup.stripped_strings)
         summary = {}
+        judges = 0
+        background = 0
+        judgment = 0
+        reasons = 0
         for i, strip in enumerate(strips):
-            judges = 0
-            background = 0
-            judgment = 0
-            reasons = 0
             if strip == "Justices":
-                print(i)
                 judges = i
-                print(strip)
             elif strip == "Background to the Appeal":
-                print(i)
                 background = i
-                print(strip)
             elif strip == "Judgment":
-                print(i)
                 judgment = i
-                print(strip)
             elif strip == "Reasons for the Judgment":
-                print(i)
                 reasons = i
-                print(strip)
-            summary["Press summary"] = "".join(strips[:judges])
-            summary["Justices"] = "".join(strips[judges+1:background])
-            summary["Background to the appeal"] = "".join(strips[background+1:judgment])
-            summary["Judgment"] = "".join(strips[judgment+1:reasons])
-            summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
+        summary["Press summary"] = "".join(strips[:judges])
+        summary["Justices"] = "".join(strips[judges+1:background])
+        summary["Background to the appeal"] = "".join(strips[background+1:judgment])
+        summary["Judgment"] = "".join(strips[judgment+1:reasons])
+        summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
     return summary
 
 def extract_all(case, post2016):

@@ -20,5 +20,8 @@ def summary_to_dict(summary, summary_url):
 
 def parse_all(judgement, summary, summary_url):
     j = judgement_to_dict(judgement)
-    ps = summary_to_dict(summary, summary_url)
+    if type(summary) != dict:
+        ps = summary_to_dict(summary, summary_url)
+    else:
+        ps = summary
     return {'judgement':j, 'press summary':ps}
