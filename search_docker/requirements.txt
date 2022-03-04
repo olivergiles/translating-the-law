@@ -1,5 +1,5 @@
 beautifulsoup4
 docker-compose
-elasticsearch
+elasticsearch==7.14.1
 selenium
 streamlit
