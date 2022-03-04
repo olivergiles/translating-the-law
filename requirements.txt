@@ -36,3 +36,4 @@ scrapy
 
 #product
 streamlit
+elasticsearch
