@@ -48,7 +48,7 @@ def set_session_state():
 
 
 def main():
-    st.set_page_config(page_title='Medium Search Engine')
+    st.set_page_config(page_title='Supreme court cases')
     set_session_state()
     layout = st.sidebar.radio('', ['Search', 'Add Story'])
     st.write(templates.load_css(), unsafe_allow_html=True)
