@@ -1,49 +1,54 @@
 import streamlit as st
-import requests
 
-'''
-# TaxiFareModel front
-'''
+def main():
+    st.title("Translating the Law")
 
-st.markdown('''
-Remember that there are several ways to output content into your web page...
+    options = st.multiselect(
+        'What features do you want',
+        ['Summary', 'Charts'],
+        [])
 
-Either as with the title by just creating a string (or an f-string). Or as with this paragraph using the `st.` functions
-''')
+    def local_css(file_name):
+        with open(file_name) as f:
+            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-'''
-## Here we would like to add some controllers in order to ask the user to select the parameters of the ride
+    def remote_css(url):
+        st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
 
-1. Let's ask for:
-- date and time
-- pickup longitude
-- pickup latitude
-- dropoff longitude
-- dropoff latitude
-- passenger count
-'''
+    def icon(icon_name):
+        st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
 
-'''
-## Once we have these, let's call our API in order to retrieve a prediction
+    local_css("translating_the_law/streamlit/style.css")
+    remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
 
-See ? No need to load a `model.joblib` file in this app, we do not even need to know anything about Data Science in order to retrieve a prediction...
+    icon("search")
+    selected = st.text_input("", "Search...")
+    button_clicked = st.button("OK")
 
-🤔 How could we call our API ? Off course... The `requests` package 💡
-'''
+    button_show = st.button("Show")
 
-url = 'https://taxifare.lewagon.ai/predict'
+    search_page_css = """
+    .css {
+        display: none;
+    }
+    .css-10trblm {
+        display: none;
+    }
+    """
+    display_search_page_css = """
+    .css {
+        display: none;
+    }
+    .css-10trblm {
+        display: center;
+    }
+    """
+    if button_clicked:
+        #st.markdown("<style>.css-10trblm {display: none;}</style>", unsafe_allow_html=True)
+        st.markdown(f"<style>{search_page_css}</style>", unsafe_allow_html=True)
+    
+    if button_show:
+        st.markdown(f"<style>{display_search_page_css}</style>", unsafe_allow_html=True)
 
-if url == 'https://taxifare.lewagon.ai/predict':
-
-    st.markdown('Maybe you want to use your own API for the prediction, not the one provided by Le Wagon...')
-
-'''
-
-2. Let's build a dictionary containing the parameters for our API...
-
-3. Let's call our API using the `requests` package...
-
-4. Let's retrieve the prediction from the **JSON** returned by the API...
-
-## Finally, we can display the prediction to the user
-'''
+if __name__ == "__main__":
+    main()
