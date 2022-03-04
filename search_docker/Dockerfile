@@ -1,19 +1,8 @@
-FROM ubuntu:18.04
+FROM python:3.8.12-buster
 
-# install python 3.7
-RUN apt-get update && apt-get install -y \
-        software-properties-common
-RUN add-apt-repository ppa:deadsnakes/ppa
-RUN apt-get update && apt-get install -y \
-    python3.7 \
-    python3-pip
-RUN python3.7 -m pip install pip
-RUN apt-get update && apt-get install -y \
-    python3-distutils \
-    python3-setuptools
-RUN python3.7 -m pip install pip --upgrade pip
+RUN python3 -m pip install pip --upgrade pip
 
-# install google chrome
+#install google chrome
 RUN apt-get update && apt-get install -y curl unzip wget
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
@@ -34,10 +23,10 @@ RUN apt update && \
     pip3 install --no-cache-dir --upgrade pip setuptools && \
     pip3 install --no-cache-dir -r /requirements.txt
 
-COPY ./srcs /srcs
+COPY ./streamlit /streamlit
 
 ENTRYPOINT ["streamlit", "run"]
 
-CMD ["/srcs/streamlit_app/app.py"]
+CMD ["/streamlit/app.py"]
 
 EXPOSE 8501

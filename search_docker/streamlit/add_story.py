@@ -4,8 +4,7 @@ import json
 import streamlit as st
 from elasticsearch import Elasticsearch
 sys.path.append('srcs')
-from streamlit_app import utils, templates
-
+import utils, templates
 
 def app():
     """ page for adding medium story """
