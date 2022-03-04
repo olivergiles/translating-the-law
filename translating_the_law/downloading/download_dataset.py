@@ -125,11 +125,11 @@ def alt_extract_press_summary(case):
             script.decompose()
         strips = list(soup.stripped_strings)
         summary = {}
+        judges = 0
+        background = 0
+        judgment = 0
+        reasons = 0
         for i, strip in enumerate(strips):
-            judges = 0
-            background = 0
-            judgment = 0
-            reasons = 0
             if strip == "Justices":
                 judges = i
             elif strip == "Background to the Appeal":
@@ -138,11 +138,11 @@ def alt_extract_press_summary(case):
                 judgment = i
             elif strip == "Reasons for the Judgment":
                 reasons = i
-            summary["Press summary"] = "".join(strips[:judges])
-            summary["Justices"] = "".join(strips[judges+1:background])
-            summary["Background to the appeal"] = "".join(strips[background+1:judgment])
-            summary["Judgment"] = "".join(strips[judgment+1:reasons])
-            summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
+        summary["Press summary"] = "".join(strips[:judges])
+        summary["Justices"] = "".join(strips[judges+1:background])
+        summary["Background to the appeal"] = "".join(strips[background+1:judgment])
+        summary["Judgment"] = "".join(strips[judgment+1:reasons])
+        summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
     return summary
 
 def alt_extract_details(case):
