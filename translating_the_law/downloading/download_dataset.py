@@ -216,4 +216,4 @@ def download_dataset(test=False):
     return data
 
 if __name__ == "__main__":
-    download_dataset()
+    download_dataset(test=True)
