@@ -4,8 +4,8 @@ import urllib.parse
 import streamlit as st
 from elasticsearch import Elasticsearch
 sys.path.append('srcs')
-from translating_the_law.streamlit import utils, templates
-from translating_the_law.streamlit.pages import add_story, search
+from streamlit_app import utils, templates
+from streamlit_app.pages import add_story, search
 
 INDEX = 'medium_data'
 PAGE_SIZE = 5
@@ -15,7 +15,7 @@ PORT = 9200
 DRIVER = '/usr/local/bin/chromedriver'
 # DRIVER = 'chromedriver_linux64/chromedriver'
 # docker run --rm -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.11.2
-es = Elasticsearch()
+es = Elasticsearch(host=DOMAIN)
 utils.check_and_create_index(es, INDEX)
 
 os.environ['INDEX'] = INDEX
@@ -61,58 +61,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#import streamlit as st
-
-#def main():
-#    st.title("Translating the Law")
-#
-#    options = st.multiselect(
-#        'What features do you want',
-#        ['Summary', 'Charts'],
-#        [])
-#
-#    def local_css(file_name):
-#        with open(file_name) as f:
-#            st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
-#
-#    def remote_css(url):
-#        st.markdown(f'<link href="{url}" rel="stylesheet">', unsafe_allow_html=True)
-#
-#    def icon(icon_name):
-#        st.markdown(f'<i class="material-icons">{icon_name}</i>', unsafe_allow_html=True)
-#
-#    local_css("translating_the_law/streamlit/style.css")
-#    remote_css('https://fonts.googleapis.com/icon?family=Material+Icons')
-#
-#    icon("search")
-#    selected = st.text_input("", "Search...")
-#    button_clicked = st.button("OK")
-#
-#    button_show = st.button("Show")
-#
-#    search_page_css = """
-#    .css {
-#        display: none;
-#    }
-#    .css-10trblm {
-#        display: none;
-#    }
-#    """
-#    display_search_page_css = """
-#    .css {
-#        display: none;
-#    }
-#    .css-10trblm {
-#        display: center;
-#    }
-#    """
-#    if button_clicked:
-#        #st.markdown("<style>.css-10trblm {display: none;}</style>", unsafe_allow_html=True)
-#        st.markdown(f"<style>{search_page_css}</style>", unsafe_allow_html=True)
-#
-#    if button_show:
-#        st.markdown(f"<style>{display_search_page_css}</style>", unsafe_allow_html=True)
-#
-#if __name__ == "__main__":
-#    main()
