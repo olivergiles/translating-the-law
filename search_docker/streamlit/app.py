@@ -4,8 +4,7 @@ import urllib.parse
 import streamlit as st
 from elasticsearch import Elasticsearch
 sys.path.append('srcs')
-from streamlit import utils, templates
-from pages import add_story, search
+import utils, templates, add_story, search
 
 INDEX = 'medium_data'
 PAGE_SIZE = 5
