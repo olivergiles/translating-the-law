@@ -3,7 +3,10 @@
 def details_new(strips):
     details = {}
     caseid = strips.index('Case summary')
-    date = strips.index('Judgment date')
+    if 'Judgment date' in strips:
+        date = strips.index('Judgment date')
+    else:
+        date = strips.index('Judgment dates')
     cit = strips.index('Neutral citation')
     justices = strips.index('Justices')
     pdf = strips.index('Judgment (PDF)')
@@ -25,7 +28,10 @@ def details_old(strips):
         cit = strips.index('Neutral citation number')
     else:
         cit = strips.index('Neutral citation number(s)')
-    date = strips.index('Judgment date')
+    if 'Judgment date' in strips:
+        date = strips.index('Judgment date')
+    else:
+        date = strips.index('Judgment dates')
     caseid = strips.index('Case ID')
     justices = strips.index('Justices')
     details['Name'] = strips[0].replace('- The Supreme Court', '')
