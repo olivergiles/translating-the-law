@@ -1,7 +1,7 @@
 import pandas as pd
 from pandas_jsonlines.read_jsonlines import read_jsonlines
 import requests
-from translating_the_law.downloading.get_details import details_new, details_old
+from translating_the_law.downloading.get_details import details_new, details_old, addl_details
 import urllib.request
 import os
 import re
@@ -79,17 +79,6 @@ def alt_extract_press_summary(case, html_link=None):
             summary["Reasons for the judgment"] = "".join(strips[reasons + 1:])
     return summary
 
-def alt_extract_details(url):
-    html = requests.get(url).content
-    soup = BeautifulSoup(html, 'html.parser')
-    strips = list(soup.stripped_strings)
-    if 'Facts' in strips:
-        details = details_new(strips)
-    else:
-        details = details_old(strips)
-    details['URL'] = url
-    return details
-
 def alt_get_case_files(links):
     case = links['base'].replace('.html', '').replace('https://www.supremecourt.uk/cases/','')
     main_text_file = f"{case}-main-text.pdf"
@@ -157,11 +146,24 @@ def alt_extract_details(case):
     details['URL'] = url
     return details
 
+def alt_extract_additional(case):
+    url = case['base']
+    html = requests.get(url).content
+    soup = BeautifulSoup(html, 'html.parser')
+    strips = list(soup.stripped_strings)
+    if 'Facts' in strips:
+        details = addl_details(strips)
+    else:
+        return 'No additional details available for this case'
+    details['URL'] = url
+    return details
+
 def alt_extract_all(case):
     j = alt_extract_judgement(case)
     ps = alt_extract_press_summary(case)
     d = alt_extract_details(case)
-    return j, ps, d
+    ad = alt_extract_additional(case)
+    return j, ps, d, ad
 
 def judgement_to_dict(judgement):
     judgement = judgement.replace("\n", "").strip()
@@ -181,14 +183,15 @@ def summary_to_dict(summary, summary_url):
         }
     return {"error": summary_url}
 
-def parse_all(judgement, summary, summary_url, details):
+def parse_all(judgement, summary, summary_url, details, addl):
     j = judgement_to_dict(judgement)
     if type(summary) != dict:
         ps = summary_to_dict(summary, summary_url)
     else:
         ps = summary
     d = details
-    return {'judgement':j, 'press summary':ps, 'details':d}
+    ad = addl
+    return {'judgement':j, 'press summary':ps, 'details':d, 'additional':ad}
 
 def download_dataset(test=False):
     save_base_path = os.path.dirname(os.path.realpath(__file__))
@@ -202,8 +205,8 @@ def download_dataset(test=False):
             break
         try:
             alt_get_case_files(case)
-            j, ps, d = alt_extract_all(case)
-            data.append(parse_all(j, ps, case['summary'],d))
+            j, ps, d, ad = alt_extract_all(case)
+            data.append(parse_all(j, ps, case['summary'], d, ad))
             alt_delete_case_files(case)
         except:
             print(case)
