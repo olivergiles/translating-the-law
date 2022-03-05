@@ -81,24 +81,23 @@ def index_search(es, index: str, keywords: str, filters: str, from_i: int,
     return res
 
 
-def index_cases(es, index: str, case: dict):
+def index_cases(es, index: str, cases: dict):
     """ """
     with st.spinner(f'Indexing...'):
         success = 0
-        for url, story in case.items():
-            try:
-                # add title into content for searching
-                _case = case.copy()
-                _case['content'] = f"{story['name']} {' '.join(story['content'])}"
-                es.index(index=index, id=url, body=_case)
-                case[url] = {'success': True, **story}
-                success += 1
-            except:
-                case[url] = {'success': False, **story}
+        for url, case in cases.items():
+            # add title into content for searching
+            _case = case.copy()
+            _case['content'] = f"{_case['name']} {' '.join(_case['content'])}"
+            es.index(index=index, id=url, body=_case)
+            cases[url] = {'success': True, **_case}
+            success += 1
+            #except:
+            #    cases[url] = {'success': False, **_case}
 
-#    st.subheader('Results')
-#    st.write(f'Total={len(stories)}, {success} succeed, {len(stories) - success} failed.')
-#    st.write(stories)
+    st.subheader('Results')
+    st.write(f'Total={len(cases)}, {success} succeed, {len(cases) - success} failed.')
+    st.write(cases)
 
 
 @st.cache(show_spinner=False)
