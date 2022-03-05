@@ -6,7 +6,7 @@ from elasticsearch import Elasticsearch
 import json
 import utils, templates, search
 
-INDEX = 'medium_data'
+INDEX = 'uksc_data'
 PAGE_SIZE = 5
 DOMAIN = 'es'
 # DOMAIN = '0.0.0.0'
