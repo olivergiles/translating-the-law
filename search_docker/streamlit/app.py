@@ -52,17 +52,17 @@ def main():
     #layout = st.sidebar.radio('', ['Search', 'Add Story'])
     st.write(templates.load_css(), unsafe_allow_html=True)
     # switch between pages
-    print(os.system("ls"))
-    with open("/data/data.json", 'r') as myfile:
-        data=myfile.read()
-    stories = json.loads(data)
+    # with open("/data/data.json", 'r') as myfile:
+    #     data=myfile.read()
+    # stories = json.loads(data)
+    with open("/data/search.json", 'r') as myfile:
+        file=myfile.read()
+    obj = json.loads(file)
+    cases = eval(obj)
     # index stories into elasticsearch
     index = os.environ['INDEX']
-    utils.index_stories(es, index, stories)
+    utils.index_cases(es, index, cases)
     search.app()
-    if 1 == 2:
-        add_story.app()
-
 
 if __name__ == '__main__':
     main()

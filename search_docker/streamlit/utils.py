@@ -2,16 +2,15 @@ import sys
 import time
 import streamlit as st
 from elasticsearch import exceptions
-sys.path.append('srcs')
 
 def check_and_create_index(es, index: str):
     """ checks if index exits and loads the data accordingly """
     mappings = {
         'mappings': {
             'properties': {
-                'author': {'type': 'keyword'},
-                'length': {'type': 'keyword'},
-                'title': {'type': 'text'},
+                'name': {'type': 'text'},
+                'date': {'type': 'keyword'},
+                'citation': {'type': 'text'},
                 'tags': {'type': 'keyword'},
                 'content': {'type': 'text'},
             }
@@ -82,20 +81,20 @@ def index_search(es, index: str, keywords: str, filters: str, from_i: int,
     return res
 
 
-def index_stories(es, index: str, stories: dict):
+def index_cases(es, index: str, case: dict):
     """ """
     with st.spinner(f'Indexing...'):
         success = 0
-        for url, story in stories.items():
+        for url, story in case.items():
             try:
                 # add title into content for searching
-                _story = story.copy()
-                _story['content'] = f"{story['title']} {' '.join(story['content'])}"
-                es.index(index=index, id=url, body=_story)
-                stories[url] = {'success': True, **story}
+                _case = case.copy()
+                _case['content'] = f"{story['name']} {' '.join(story['content'])}"
+                es.index(index=index, id=url, body=_case)
+                case[url] = {'success': True, **story}
                 success += 1
             except:
-                stories[url] = {'success': False, **story}
+                case[url] = {'success': False, **story}
 
 #    st.subheader('Results')
 #    st.write(f'Total={len(stories)}, {success} succeed, {len(stories) - success} failed.')
@@ -119,7 +118,7 @@ def simplify_es_result(result: dict) -> dict:
     # join list of highlights into a sentence
     res['highlights'] = '...'.join(result['highlight']['content'])
     # limit the number of characters in the title
-    res['title'] = shorten_title(res['title'])
+    res['name'] = shorten_title(res['name'])
     return res
 
 
