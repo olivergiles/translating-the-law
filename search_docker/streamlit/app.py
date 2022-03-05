@@ -3,8 +3,8 @@ import sys
 import urllib.parse
 import streamlit as st
 from elasticsearch import Elasticsearch
-sys.path.append('srcs')
-import utils, templates, add_story, search
+import json
+import utils, templates, search
 
 INDEX = 'medium_data'
 PAGE_SIZE = 5
@@ -49,12 +49,18 @@ def set_session_state():
 def main():
     st.set_page_config(page_title='Supreme court cases')
     set_session_state()
-    layout = st.sidebar.radio('', ['Search', 'Add Story'])
+    #layout = st.sidebar.radio('', ['Search', 'Add Story'])
     st.write(templates.load_css(), unsafe_allow_html=True)
     # switch between pages
-    if layout == 'Search':
-        search.app()
-    elif layout == 'Add Story':
+    print(os.system("ls"))
+    with open("/data/data.json", 'r') as myfile:
+        data=myfile.read()
+    stories = json.loads(data)
+    # index stories into elasticsearch
+    index = os.environ['INDEX']
+    utils.index_stories(es, index, stories)
+    search.app()
+    if 1 == 2:
         add_story.app()
 
 

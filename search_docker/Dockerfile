@@ -23,6 +23,7 @@ RUN apt update && \
     pip3 install --no-cache-dir --upgrade pip setuptools && \
     pip3 install --no-cache-dir -r /requirements.txt
 
+COPY ./data /data
 COPY ./streamlit /streamlit
 
 ENTRYPOINT ["streamlit", "run"]

@@ -3,8 +3,6 @@ import time
 import streamlit as st
 from elasticsearch import exceptions
 sys.path.append('srcs')
-import medium
-
 
 def check_and_create_index(es, index: str):
     """ checks if index exits and loads the data accordingly """
@@ -99,9 +97,9 @@ def index_stories(es, index: str, stories: dict):
             except:
                 stories[url] = {'success': False, **story}
 
-    st.subheader('Results')
-    st.write(f'Total={len(stories)}, {success} succeed, {len(stories) - success} failed.')
-    st.write(stories)
+#    st.subheader('Results')
+#    st.write(f'Total={len(stories)}, {success} succeed, {len(stories) - success} failed.')
+#    st.write(stories)
 
 
 @st.cache(show_spinner=False)
@@ -125,26 +123,26 @@ def simplify_es_result(result: dict) -> dict:
     return res
 
 
-@st.cache(show_spinner=False)
-def get_story_urls_from_list(url: str, chrome: str):
-    """ """
-    with st.spinner('Getting story urls from list...'):
-        return medium.get_story_from_list(url, chrome=chrome)
+# @st.cache(show_spinner=False)
+# def get_story_urls_from_list(url: str, chrome: str):
+#     """ """
+#     with st.spinner('Getting story urls from list...'):
+#         return medium.get_story_from_list(url, chrome=chrome)
 
 
-@st.cache(show_spinner=False)
-def get_story_from_url(url: str, chrome: str) -> dict:
-    """ """
-    retry = 0
-    while retry < 5:
-        try:
-            story = medium.Story(url)
-            story.scrape(chrome=chrome)
-            return story.to_dict()
-        except Exception as e:
-            print(e)
-            time.sleep(1)
-            retry += 1
+# @st.cache(show_spinner=False)
+# def get_story_from_url(url: str, chrome: str) -> dict:
+#     """ """
+#     retry = 0
+#     while retry < 5:
+#         try:
+#             story = medium.Story(url)
+#             story.scrape(chrome=chrome)
+#             return story.to_dict()
+#         except Exception as e:
+#             print(e)
+#             time.sleep(1)
+#             retry += 1
 
-    print(f'Error getting {url}')
-    return {}
+#     print(f'Error getting {url}')
+#     return {}
