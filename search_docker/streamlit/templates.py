@@ -160,14 +160,14 @@ def pagination(total_pages: int, search: str, current_page: int,
     return '<div>' + '&emsp;'.join(hrefs) + '</div>'
 
 
-def search_result(i: int, url: str, title: str, highlights: str,
-                  author: str, length: str, **kwargs) -> str:
+def search_result(i: int, url: str, name: str, highlights: str,
+                  date: str, citation: str, **kwargs) -> str:
     """ HTML scripts to display search results. """
     return f"""
         <div style="font-size:120%;">
             {i + 1}.
             <a href="{url}">
-                {title}
+                {name}
             </a>
         </div>
         <div style="font-size:95%;">
@@ -175,10 +175,10 @@ def search_result(i: int, url: str, title: str, highlights: str,
                 {url[:90] + '...' if len(url) > 100 else url}
             </div>
             <div style="float:left;font-style:italic;">
-                {author} ·&nbsp;
+                {date} ·&nbsp;
             </div>
             <div style="color:grey;float:left;">
-                {length} ...
+                {citation} ...
             </div>
             {highlights}
         </div>
