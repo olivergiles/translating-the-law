@@ -7,8 +7,6 @@ import utils, templates
 
 
 def app():
-    """ search layout """
-    # load css
     index = os.environ['INDEX']
     page_size = int(os.environ['PAGE_SIZE'])
     domain = os.environ['DOMAIN']
