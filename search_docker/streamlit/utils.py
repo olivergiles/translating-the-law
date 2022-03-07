@@ -81,7 +81,7 @@ def index_search(es, index: str, keywords: str, filters: str, from_i: int,
     return res
 
 
-def index_cases(es, index: str, cases: dict):
+def index_cases(es, index: str, cases: dict, test:bool):
     """ """
     with st.spinner(f'Indexing...'):
         success = 0
@@ -95,9 +95,10 @@ def index_cases(es, index: str, cases: dict):
             #except:
             #    cases[url] = {'success': False, **_case}
 
-    st.subheader('Results')
-    st.write(f'Total={len(cases)}, {success} succeed, {len(cases) - success} failed.')
-    st.write(cases)
+    if test == True:
+        st.subheader('Results')
+        st.write(f'Total={len(cases)}, {success} succeed, {len(cases) - success} failed.')
+        st.write(cases)
 
 
 @st.cache(show_spinner=False)
@@ -119,28 +120,3 @@ def simplify_es_result(result: dict) -> dict:
     # limit the number of characters in the title
     res['name'] = shorten_title(res['name'])
     return res
-
-
-# @st.cache(show_spinner=False)
-# def get_story_urls_from_list(url: str, chrome: str):
-#     """ """
-#     with st.spinner('Getting story urls from list...'):
-#         return medium.get_story_from_list(url, chrome=chrome)
-
-
-# @st.cache(show_spinner=False)
-# def get_story_from_url(url: str, chrome: str) -> dict:
-#     """ """
-#     retry = 0
-#     while retry < 5:
-#         try:
-#             story = medium.Story(url)
-#             story.scrape(chrome=chrome)
-#             return story.to_dict()
-#         except Exception as e:
-#             print(e)
-#             time.sleep(1)
-#             retry += 1
-
-#     print(f'Error getting {url}')
-#     return {}
