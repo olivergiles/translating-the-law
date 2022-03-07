@@ -1,4 +1,3 @@
-###not sure if there are imports I need here or not
 
 def details_new(strips):
     details = {}
