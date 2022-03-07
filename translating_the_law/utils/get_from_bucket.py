@@ -8,9 +8,11 @@ def open_from_bucket():
     gcs_json_path = "gs://law-data-ogiles/data/simplified_data.json"
     with gcs_file_system.open(gcs_json_path) as f:
         json_dict = json.load(f)
-    return eval(json_dict)
+    data = eval(json_dict)
+    clean_data = [case for case in data if not case["press summary"].get('error')]
+    return clean_data
 #    data = pd.read_json(gcs_json_path)
 #    return data
 
 if __name__ == "__main__":
-    print(open_from_bucket()[0])
+    print(len(open_from_bucket()))
