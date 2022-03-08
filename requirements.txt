@@ -37,3 +37,4 @@ scrapy
 #product
 streamlit
 elasticsearch
+fastapi
