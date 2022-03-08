@@ -1,11 +1,11 @@
 FROM huggingface/transformers-pytorch-gpu:latest
 
 COPY models /models
-COPY data /data
+COPY api /api
+
 COPY requirements.txt /requirements.txt
-COPY functions /functions
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-CMD ["tree"]
+CMD uvicorn api.app:app --host 0.0.0.0 --port $PORT
