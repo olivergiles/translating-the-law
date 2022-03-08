@@ -1,13 +1,6 @@
 import streamlit as st
 import pandas as pd
 
-#primaryColor = "#B97D60" -- tan
-#backgroundColor = "#F0EAD6" -- eggshell
-#secondaryBackgroundColor = "#F8FDFD" -- light light robins egg
-#textColor = "#04226D" -- navy
-#font = "serif"
-
-
 years_df = pd.DataFrame({
     'index': [1, 2, 3, 4, 5, 6, 7, 8, 9 , 10, 11, 12, 13, 14],
     'years': [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017,
@@ -27,15 +20,16 @@ cases_df = pd.DataFrame({
     })
 
 st.title('Translate the Law')
-#st.header('Translate the Law')
-#st.subheader('Translate the Law')
-st.caption('Need to quickly understand a UK Supreme Court case? Select from the menu below or search by keyword to find a concise summary.')
+st.write('#')
+st.subheader('Select a case by year')
+st.caption('Need to quickly understand a UK Supreme Court case?\
+    Select one from the menu below or choose random to learn something new!')
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1,5])
 
 with col1:
     years_option = st.selectbox(
-        'What case year?',
+        'Judgment year',
         years_df['years'])
 
 with col2:
@@ -43,18 +37,17 @@ with col2:
         'Case name',
         cases_df['casename'])
 
-'You selected: ', cases_option
-#st.caption(('You selected: ', cases_option))
-#can't make the above work; maybe try f string
+st.caption(f'Go to summary: {cases_option}')
+# for bolder text: st.write(f'Go to summary: {cases_option}')
 
 random_search = st.button('Select a random case')
 
+options = st.sidebar.title('Choose a case:')
+select_year = st.sidebar.button('Select case from year')
+search_keyword = st.sidebar.button('Search case by keyword')
+new_case = st.sidebar.button('Upload your own text')
 
-menu = st.sidebar.title('Custom options')
-
-case_search = st.sidebar.text_input(
-    'Search for case by keyword',
-    'Case name or Justice')
-#not sure how to make text in search bar lighter but something to consider
-
-upload_case = st.sidebar.text_area('Upload your own judgment text for summarization')
+#menu = st.sidebar.title('Menu')
+#options = st.sidebar.radio('Choose a case', ('Select case from year',
+#                               'Search case by keyword',
+#                               'Upload your own judgment text for summarization'))

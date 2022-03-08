@@ -5,3 +5,9 @@ backgroundColor = "#F0EAD6"
 secondaryBackgroundColor = "#F8FDFD"
 textColor = "#04226D"
 font = "serif"
+
+
+#primaryColor = "#B97D60" (tan)
+#backgroundColor = "#F0EAD6" (eggshell)
+#secondaryBackgroundColor = "#F8FDFD" (light light robins egg)
+#textColor = "#04226D" (navy)
