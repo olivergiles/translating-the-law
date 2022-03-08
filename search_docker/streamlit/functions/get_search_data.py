@@ -12,18 +12,18 @@ def open_from_bucket():
 
 def create_search_data(data):
     search_data = {}
-    for case in data:
-        URL = case['details']['URL']
+    for i, case in enumerate(data):
+        KEY = i
         data = {
             'name':case['details']['Name'],
             'date':case['details']['Judgment date'],
             'citation':case['details']['Neutral citation'],
             'tags': ["law", "judge", "case"],
-            'content':[case['press summary']['Reasons for the judgment'],
-                       case['details']['Neutral citation'],
-                       case['details']['Judgment date']]
+            'content':[case['details']['Neutral citation'],
+                       case['details']['Judgment date'],
+                       case['press summary']['Reasons for the judgment'][:150]]
         }
-        search_data[URL] = data
+        search_data[KEY] = data
     return search_data
 
 def get_search_data():

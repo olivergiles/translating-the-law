@@ -40,5 +40,4 @@ def open_from_bucket():
         json_dict = json.load(f)
     data = eval(json_dict)
     clean_data = [case for case in data if not case["press summary"].get('error')]
-    clean_data = cleaner(clean_data)
     return clean_data
