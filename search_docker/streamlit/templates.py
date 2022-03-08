@@ -1,6 +1,5 @@
 import urllib.parse
 
-
 def info_add_json() -> str:
     """ """
     return """
@@ -23,49 +22,6 @@ def info_add_json() -> str:
         </div>
 
     """
-
-
-def info_add_story() -> str:
-    """ """
-    return """
-        <div style="margin-bottom:1em;">
-            There are 2 ways of adding story into the search engine 
-            which are using URL or JSON file.
-            <ul>
-                <li>
-                    URL - either medium story URL or medium list URL.
-                </li>
-                <li>
-                    JSON - content of one or more medium stories. 
-                    Example file can be found at 
-                    <a href="https://github.com/chiachong/medium-search-app/blob/main/data/example.json">here</a>.
-                </li>
-            </ul>
-        </div>
-    """
-
-
-def info_add_url() -> str:
-    """ """
-    return """
-        <div>
-            <ul>
-                <li>
-                    Story url - the url to a medium story. Only one story would 
-                    be added into the search engine at a time.
-                </li>
-                <li>
-                    List url - the url to a <b>public</b> medium list. There 
-                    could be multiple stories being added into the search 
-                    engine depends on how many stories in that medium list. 
-                    <span style="color:grey;">
-                    (typically looks like https://medium.com/@USERNAME/list/LISTNAME-HASH)
-                    </span>
-                </li>
-            </ul>
-        </div>
-    """
-
 
 def load_css() -> str:
     """ Return all css styles. """
@@ -110,7 +66,6 @@ def load_css() -> str:
         </style>
     """
 
-
 def no_result_html() -> str:
     """ """
     return """
@@ -118,7 +73,6 @@ def no_result_html() -> str:
             No results were found.
         </div><br>
     """
-
 
 def number_of_results(total_hits: int, duration: float) -> str:
     """ HTML scripts to display number of results and time taken. """
@@ -160,19 +114,19 @@ def pagination(total_pages: int, search: str, current_page: int,
     return '<div>' + '&emsp;'.join(hrefs) + '</div>'
 
 
-def search_result(i: int, url: str, name: str, highlights: str,
+def search_result(i: int, index: str, name: str, highlights: str,
                   date: str, citation: str, **kwargs) -> str:
     """ HTML scripts to display search results. """
     return f"""
         <div style="font-size:120%;">
             {i + 1}.
-            <a href="{url}">
+            <a href="{index}">
                 {name}
             </a>
         </div>
         <div style="font-size:95%;">
             <div style="color:grey;font-size:95%;">
-                {url[:90] + '...' if len(url) > 100 else url}
+                {index[:90] + '...' if len(index) > 100 else index}
             </div>
             <div style="float:left;font-style:italic;">
                 {date} ·&nbsp;
