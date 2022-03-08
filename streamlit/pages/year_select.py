@@ -33,8 +33,9 @@ def app():
     with col2:
         cases_option = st.selectbox('Case name',
                                     cases_df['casename'])
-    st.caption(f'Go to summary: {cases_option}')
+    # st.caption(f'Go to summary: {cases_option}')
     # for bolder text: st.write(f'Go to summary: {cases_option}')
+    st.button(f'Go to summary: {cases_option}')
     st.button('Select a random case')
 
     #st.sidebar.title('Choose a case:')
