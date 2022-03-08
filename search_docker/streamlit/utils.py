@@ -34,8 +34,8 @@ def safe_check_index(es, index: str, retry: int = 3):
         time.sleep(5)
         safe_check_index(es, index, retry - 1)
 
-
-def index_search(es, index: str, keywords: str, filters: str, from_i: int,
+@st.experimental_memo
+def index_search(_es, index: str, keywords: str, filters: str, from_i: int,
                  size: int) -> dict:
     """ """
     body = {
@@ -73,7 +73,7 @@ def index_search(es, index: str, keywords: str, filters: str, from_i: int,
             }
         }
 
-    res = es.search(index=index, body=body)
+    res = _es.search(index=index, body=body)
     # sort popular tags
     sorted_tags = res['aggregations']['tags']['buckets']
     sorted_tags = sorted(sorted_tags, key=lambda t: t['doc_count'], reverse=True)
@@ -86,7 +86,6 @@ def index_cases(es, index: str, cases: dict, test:bool):
     with st.spinner(f'Indexing...'):
         success = 0
         for url, case in cases.items():
-            # add title into content for searching
             _case = case.copy()
             _case['content'] = f"{_case['name']} {' '.join(_case['content'])}"
             es.index(index=index, id=url, body=_case)
@@ -114,7 +113,7 @@ def shorten_title(title: str, limit: int = 65) -> str:
 def simplify_es_result(result: dict) -> dict:
     """ """
     res = result['_source']
-    res['url'] = result['_id']
+    res['index'] = result['_id']
     # join list of highlights into a sentence
     res['highlights'] = '...'.join(result['highlight']['content'])
     # limit the number of characters in the title
