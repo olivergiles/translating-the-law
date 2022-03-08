@@ -28,14 +28,15 @@ cases_df = pd.DataFrame({
 
 st.title('Translate the Law')
 #st.header('Translate the Law')
-#st.subheader('Translate the Law')
-st.caption('Need to quickly understand a UK Supreme Court case? Select from the menu below or search by keyword to find a concise summary.')
+st.subheader('Select a case by year')
+st.caption('Need to quickly understand a UK Supreme Court case?\
+    Select one from the menu below or choose random to learn something new!')
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([1,5])
 
 with col1:
     years_option = st.selectbox(
-        'What case year?',
+        'Judgment year',
         years_df['years'])
 
 with col2:
@@ -49,12 +50,13 @@ with col2:
 
 random_search = st.button('Select a random case')
 
+options = st.sidebar.title('Choose a case:')
+select_year = st.sidebar.button('Select case from year')
+search_keyword = st.sidebar.button('Search case by keyword')
+new_case = st.sidebar.button('Upload your own text')
 
-menu = st.sidebar.title('Custom options')
 
-case_search = st.sidebar.text_input(
-    'Search for case by keyword',
-    'Case name or Justice')
-#not sure how to make text in search bar lighter but something to consider
-
-upload_case = st.sidebar.text_area('Upload your own judgment text for summarization')
+#menu = st.sidebar.title('Menu')
+#options = st.sidebar.radio('Choose a case', ('Select case from year',
+#                               'Search case by keyword',
+#                               'Upload your own judgment text for summarization'))
