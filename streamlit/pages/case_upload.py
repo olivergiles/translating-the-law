@@ -16,7 +16,6 @@ def app():
         st.write('Summary:', summary)
     else:
         pass
-    st.write("The model-generated summary will show up here")
 
     #sometimes after we've been using the site too much, the multiapp nav gets weird
     #(aka stops working)
