@@ -1,4 +1,4 @@
-from translating_the_law.utils.get_from_bucket import open_from_bucket
+from translating_the_law.utils.simplified_get_from_bucket import open_from_bucket
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -25,7 +25,7 @@ def app():
     col1, col2 = st.columns([1,5])
     with col1:
         choose_year = st.selectbox('Judgment year',
-                                   years)
+                                   np.sort(years))
     with col2:
         cases_option = st.selectbox('Case name',
                                     year_dir[year_dir['Year'] == choose_year]['Name'])
@@ -33,7 +33,7 @@ def app():
     choose_random = st.button('Select a random case')
     if choose_case:
         st.write('#')
-        st.header(f'{cases_option}')
+        st.header(cases_option)
         st.write('##')
         st.subheader("Summary")
         st.write("The model-generated summary will show up here,\
