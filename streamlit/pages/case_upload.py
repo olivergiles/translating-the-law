@@ -1,19 +1,29 @@
 import streamlit as st
 import pandas as pd
+import requests
 
 def app():
     st.title('Translate the Law')
     st.write('#')
-    st.subheader('Upload your own case')
+    st.subheader('Summarize a new case')
     st.caption("Have a court judgment or press release you want to understand?\
         Enter the text of your document below to have it quickly summarized.")
-    txt = st.text_area('Enter judgment text for summarization',
-                       max_chars=None,
-                       placeholder='Max char: ?')
-    st.write('The text you entered was:', txt)
+    txt = st.text_area('Paste legal text and press enter to return your summary',
+                        max_chars=None,
+                        placeholder='Max char: TBD')
+    if st.button('Enter'):
+        #st.write(txt)
+        summary = requests.get(f'https://uskc-summarizer-app-jaefennyiq-ew.a.run.app/summary?text="{txt}"').json()['summary']
+        st.write('Summary:', summary)
+    else:
+        pass
     st.write("The model-generated summary will show up here")
+
 
     #st.sidebar.title('Choose a case:')
     #st.sidebar.button('Select case from year')
     #st.sidebar.button('Search case by keyword')
     #st.sidebar.button('Upload your own text')
+
+    #sometimes after we've been using the site too much, the multiapp nav gets weird
+    #(aka stops working)

@@ -9,7 +9,11 @@ def app():
         Search the one you're looking for by name, justice, case ID, or other keyword.")
     query = st.text_input('Search for case by keyword',
                   placeholder='Enter case detail or topic')
-    st.write('Search results for: ', query)
+    if st.button('Enter'):
+        st.write('Search results for: ', query)
+    else:
+        pass
+
 
     #st.sidebar.title('Choose a case:')
     #st.sidebar.button('Select case from year')

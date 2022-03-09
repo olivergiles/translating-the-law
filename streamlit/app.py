@@ -9,7 +9,7 @@ app.add_app('Search case by keyword', case_search.app)
 app.add_app('Upload your own text', case_upload.app)
 
 #we will probably have to figure out how to hide this from the nav options
-app.add_app('Case summary', case_result.app)
+#app.add_app('Case summary', case_result.app)
 
 
 app.run()
