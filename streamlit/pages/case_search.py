@@ -13,9 +13,3 @@ def app():
         st.write('Search results for: ', query)
     else:
         pass
-
-
-    #st.sidebar.title('Choose a case:')
-    #st.sidebar.button('Select case from year')
-    #st.sidebar.button('Search case by keyword')
-    #st.sidebar.button('Upload your own text')

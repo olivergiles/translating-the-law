@@ -1,30 +1,20 @@
 from translating_the_law.utils.get_from_bucket import open_from_bucket
 import streamlit as st
 import pandas as pd
+import numpy as np
 
-data = open_from_bucket()
+def get_year(date):
+    new_date = date[-4:]
+    return new_date
 
-case_df = pd.DataFrame([data])
-years_df = pd.DataFrame({
-    'index': [1, 2, 3, 4, 5, 6, 7, 8, 9 , 10, 11, 12, 13, 14],
-    'years': [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017,
-              2018, 2019, 2020, 2021, 2022]
-    })
-
-cases_df = pd.DataFrame({
-    'index': [1, 2, 3, 4, 5, 6, 7, 8],
-    'casename': ["Craig (Appellant) v Her Majesty’s Advocate (for the Government of the United States of America) and another (Respondents) (Scotland)",
-                 "Bloomberg LP (Appellant) v ZXC (Respondent)",
-                 "Public Prosecutors Office of the Athens Court of Appeal (Appellant) v O'Connor (AP) (Respondent) (Northern Ireland)",
-                 "R (on the application of The Project for the Registration of Children as British Citizens) (Appellant) v Secretary of State for the Home Department) (Respondent) (Expedited)",
-                 "R (on the application of O (a minor, by her litigation friend AO)) (Appellant) v Secretary of State for the Home Department (Respondent)",
-                 "Akdogan and another (AP) (Appellants) v Director of Public Prosecutions (Respondent)",
-                 "PWR (AP) (Appellant) v Director of Public Prosecutions (Respondent)",
-                 "Firstport Property Services Limited (Appellant) v Settlers Court RTM Company and others (Respondents)"]
-    })
+data_df = pd.DataFrame(open_from_bucket())
+details_list = list(data_df['details'])
+details_df = pd.DataFrame(details_list)
+year_dir = details_df.drop(columns=['Case ID', 'Neutral citation', 'Justices'])
+year_dir['Year'] = year_dir['Judgment date'].map(get_year)
+years = year_dir['Year'].unique()
 
 questions_df = pd.DataFrame({'questions': ['Please select', 'Sample Question 1', 'Sample Question 2']})
-
 
 def app():
     st.title('Translate the Law')
@@ -34,13 +24,11 @@ def app():
         Select one from the menu below or choose random to learn something new!')
     col1, col2 = st.columns([1,5])
     with col1:
-        st.selectbox('Judgment year',
-                     years_df['years'])
+        choose_year = st.selectbox('Judgment year',
+                                   years)
     with col2:
         cases_option = st.selectbox('Case name',
-                                    cases_df['casename'])
-    # st.caption(f'Go to summary: {cases_option}')
-    # for bolder text: st.write(f'Go to summary: {cases_option}')
+                                    year_dir[year_dir['Year'] == choose_year]['Name'])
     choose_case = st.button(f'Go to summary: {cases_option}')
     choose_random = st.button('Select a random case')
     if choose_case:
@@ -64,9 +52,10 @@ def app():
             st.write(f'Q: {new_q}')
         st.write("A: The model-generated answer(s) will show up here")
     elif choose_random:
-        #lines for select random case
+        choose_index = np.random.randint(0, len(year_dir))
+        random_case = year_dir.at[choose_index, 'Name']
         st.write('#')
-        st.header(f'Placeholder: random case title')
+        st.header(random_case)
         st.write('##')
         st.subheader("Summary")
         st.write("The model-generated summary will show up here,\
@@ -88,8 +77,3 @@ def app():
         st.write("A: The model-generated answer(s) will show up here")
     else:
         pass
-
-    #st.sidebar.title('Choose a case:')
-    #st.sidebar.button('Select case from year')
-    #st.sidebar.button('Search case by keyword')
-    #st.sidebar.button('Upload your own text')
