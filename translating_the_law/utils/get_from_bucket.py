@@ -11,8 +11,6 @@ def open_from_bucket():
     data = eval(json_dict)
     clean_data = [case for case in data if not case["press summary"].get('error')]
     return clean_data
-#    data = pd.read_json(gcs_json_path)
-#    return data
 
 if __name__ == "__main__":
     print(len(open_from_bucket()))
