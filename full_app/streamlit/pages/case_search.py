@@ -9,7 +9,7 @@ def app():
     st.write('#')
     ### Example for connection to question answering api
     question = "what was the outcome?"
-    text_type = "summ"
+    text_type = "summ" #full
     key = 0
     url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
     response = requests.get(url).json()
