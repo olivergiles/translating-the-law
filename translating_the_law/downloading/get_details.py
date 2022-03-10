@@ -16,7 +16,7 @@ def details_new(strips):
         details['Case ID'] = strips[caseid-1].replace('Case ID:', 'UKSC')
     else:
         details['Case ID'] = strips[caseid-1]
-    details['Judgment date'] = ', '.join(strips[date+1])
+    details['Judgment date'] = strips[date+1]
     details['Neutral citation'] = ', '.join(strips[cit+1:pdf])
     details['Justices'] = strips[justices+1]
     return details
@@ -35,7 +35,7 @@ def details_old(strips):
     justices = strips.index('Justices')
     details['Name'] = strips[0].replace('- The Supreme Court', '')
     details['Case ID'] = ', '.join(strips[caseid+1:justices])
-    details['Judgment date'] = ', '.join(strips[date+1])
+    details['Judgment date'] = strips[date+1]
     details['Neutral citation'] = ', '.join(strips[cit+1:caseid])
     details['Justices'] = strips[justices+1]
     return details
