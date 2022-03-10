@@ -38,8 +38,8 @@ except:
 app = MultiApp()
 
 app.add_app('Select case from year', year_select.app)
-app.add_app('Search case by keyword', case_search.app)
+app.add_app('Search for a case by keyword', search.app)
 app.add_app('Upload your own text', case_upload.app)
-app.add_app('uksc_data', search.app)
+app.add_app('Question API Example', case_search.app)
 
 app.run()
