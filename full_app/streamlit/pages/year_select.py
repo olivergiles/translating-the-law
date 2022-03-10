@@ -5,7 +5,7 @@ import numpy as np
 import json
 import gcsfs
 import requests
-
+import os
 def open_from_bucket():
     gcs_file_system = gcsfs.GCSFileSystem()
     gcs_json_path = "gs://law-data-ogiles/data/simplified_data.json"
@@ -29,11 +29,20 @@ years = year_dir['Year'].unique()
 
 questions_df = pd.DataFrame({'questions': ['Please select', 'Sample Question 1', 'Sample Question 2']})
 
+base_path = os.path.dirname(os.path.realpath(__file__))
+base_path = os.path.dirname(base_path)
+path = os.path.join(base_path, 'data', 'summarised_data.json')
+with open(path, 'r') as myfile:
+    data=myfile.read()
+obj = json.loads(data)
+data_dictionary_summarised = obj
+
 def app():
     st.title('Translate the Law')
     st.write('##')
     st.subheader('Select a case by year')
     col1, col2 = st.columns([1,5])
+    choose_index = 0
     with col1:
         choose_year = st.selectbox('Judgment year:',
                                    np.sort(years)[:-2])
@@ -43,6 +52,7 @@ def app():
     choose_case = st.button(f'Go to summary: {cases_option}')
     choose_random = st.button('Select a random case')
     if choose_case:
+        choose_index = year_dir['Name'].index(cases_option)
         st.write('#')
         st.header(cases_option)
     elif choose_random:
@@ -52,9 +62,10 @@ def app():
         st.header(random_case)
     st.write('##')
     st.subheader("Summary")
-    st.write("The model-generated summary will show up here,\
-        along with some of the other relevant case details such as case id number,\
-        judgment date, names of justices, and neutral citation number(?)")
+    st.write(f'''
+             Background Summary: {data_dictionary_summarised[choose_index]['Background summary']},
+             Judgment Summary: {data_dictionary_summarised[choose_index]['Judgment summary']}
+             ''' )
     st.write('##')
     st.subheader('Q&A')
     col1, col2 = st.columns([2,3])
