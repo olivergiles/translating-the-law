@@ -8,11 +8,12 @@ def app():
     st.subheader('Summarize a new case')
     st.caption("Have a court judgment or press release you want to understand?\
         Enter the text of your document below to have it quickly summarized.")
-    txt = st.text_area('Paste legal text and press enter to return your summary',
+    txt = st.text_area('Paste legal text and press enter to get your summary',
                         max_chars=None,
-                        placeholder='Max char: TBD')
+                        placeholder=None)
     if st.button('Enter'):
-        summary = requests.get(f'https://uskc-summarizer-app-jaefennyiq-ew.a.run.app/summary?text="{txt}"').json()['summary']
+        summary = requests.get(f'https://uskc-summarizer-app-jaefennyiq-ew.a.run.app/summary?text="{txt}"').\
+            json()['summary']
         st.write('Summary: ', summary[0]["summary_text"])
     else:
         pass

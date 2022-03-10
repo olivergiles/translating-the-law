@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 import json
 import gcsfs
+import requests
 
 def open_from_bucket():
     gcs_file_system = gcsfs.GCSFileSystem()
@@ -58,11 +59,17 @@ def app():
             our_q = st.selectbox('Suggested questions', questions_df['questions'])
         with col2:
             new_q = st.text_input('Or write your own', placeholder='Ask a question about this case')
+        #ask = st.button('Ask')
         if our_q != 'Please select':
-            st.write(f'Q: {our_q}')
+            question = 'sample question: what was the outcome?'
         else:
-            st.write(f'Q: {new_q}')
-        st.write("A: The model-generated answer(s) will show up here")
+            question = new_q
+        #if ask:
+        text_type = "summ"
+        key = 0
+        url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
+        response = requests.get(url).json()
+        st.write("A: ", response["answer"]["answer"], "\n Confidence: ", response["answer"]["score"])
     elif choose_random:
         choose_index = np.random.randint(0, len(year_dir))
         random_case = year_dir.at[choose_index, 'Name']
@@ -82,10 +89,19 @@ def app():
         with col2:
             new_q = st.text_input('Or write your own',
                                 placeholder='Ask a question about this case')
-        if our_q != 'Please select':
-            st.write(f'Q: {our_q}')
-        else:
-            st.write('Q: ', new_q)
-        st.write("A: The model-generated answer(s) will show up here")
-    else:
-        pass
+        ask = st.button('Ask')
+        if ask and our_q != 'Please select':
+            answer = 'saved answer for suggested question'
+        elif ask:
+            answer = 'new output from Q&A model'
+        st.write(f'A: {answer}')
+
+
+    ### Example for connection to question answering api
+    #question = "what was the outcome?"
+    #text_type = "summ"
+    #key = 0
+    #url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
+    #response = requests.get(url).json()
+    #st.write("Question answer: ", response["answer"]["answer"], "\n Confidence: ", response["answer"]["score"])
+    ### End of example
