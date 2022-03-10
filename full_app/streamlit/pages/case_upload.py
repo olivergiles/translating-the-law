@@ -5,7 +5,7 @@ import requests
 def app():
     st.title('Translate the Law')
     st.write('##')
-    st.subheader('Summarize a new case')
+    st.subheader('Summarise a new case')
     txt = st.text_area('Paste legal text and press enter to get your summary:',
                         max_chars=None,
                         placeholder=None)
