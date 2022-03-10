@@ -52,35 +52,34 @@ def app():
     choose_case = st.button(f'Go to summary: {cases_option}')
     choose_random = st.button('Select a random case')
     if choose_case:
-        choose_index = year_dir['Name'].index(cases_option)
+        choose_index = list(year_dir['Name']).index(cases_option)
         st.write('#')
         st.header(cases_option)
+        st.write('##')
+        st.subheader("Summary")
+        st.write(f'''
+             Summary: {data_dictionary_summarised[choose_index]['Background summary']},
+             Judgment: {data_dictionary_summarised[choose_index]['Judgment summary']}
+             ''' )
     elif choose_random:
         choose_index = np.random.randint(0, len(year_dir))
         random_case = year_dir.at[choose_index, 'Name']
         st.write('#')
         st.header(random_case)
-    st.write('##')
-    st.subheader("Summary")
-    st.write(f'''
-             Background Summary: {data_dictionary_summarised[choose_index]['Background summary']},
-             Judgment Summary: {data_dictionary_summarised[choose_index]['Judgment summary']}
+        st.write('##')
+        st.subheader("Summary")
+        st.write(f'''
+             Summary: {data_dictionary_summarised[choose_index]['Background summary']},
+             Judgment: {data_dictionary_summarised[choose_index]['Judgment summary']}
              ''' )
     st.write('##')
     st.subheader('Q&A')
-    col1, col2 = st.columns([2,3])
-    with col1:
-        our_q = st.selectbox('Select a suggested question:', questions_df['questions'])
-    with col2:
-        new_q = st.text_input('Or write your own:', placeholder='Ask a question about this case')
+    new_q = st.text_input('Question: ', placeholder='Ask a question about this case')
     ask = st.button('Ask')
     if ask:
-        if our_q != 'Please select':
-            question = 'sample question: what was the outcome?'
-        else:
-            question = new_q
+        question = "What was the outcome?"
         text_type = "summ"
-        key = 0
+        key = 23
         url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
         response = requests.get(url).json()
         st.write("Question: ", question)
