@@ -9,10 +9,9 @@ data = open_from_bucket()
 def index():
     return {'ok': True}
 
-#cleaner(data[int(key)]['press summary']['Background to the appeal'])+cleaner(data[int(key)]['press summary']['Reasons for the judgment'])
-
 @app.get("/summary")
 def summary(text):
     model = pipeline("summarization", model="/models/summarization-pretrained")
+    text = text.replace("%", " ")
     TEXT = cleaner(text)
-    return {"summary": model(TEXT, max_length=110, min_length=30, do_sample=True)}
+    return {"summary": model(TEXT, max_length=110, min_length=75, do_sample=True)}
