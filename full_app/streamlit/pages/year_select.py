@@ -36,12 +36,12 @@ def app():
     col1, col2 = st.columns([1,5])
     with col1:
         choose_year = st.selectbox('Judgment year:',
-                                   np.sort(years))
+                                   np.sort(years)[:-2])
     with col2:
         cases_option = st.selectbox('Case name:',
                                     year_dir[year_dir['Year'] == choose_year]['Name'])
-    choose_case = st.button(f'Go to summary: {cases_option}', key='selection')
-    choose_random = st.button('Select a random case', key='selection')
+    choose_case = st.button(f'Go to summary: {cases_option}')
+    choose_random = st.button('Select a random case')
     if choose_case:
         st.write('#')
         st.header(cases_option)
@@ -75,13 +75,3 @@ def app():
         st.write("Question: ", question)
         st.write("Answer: ", response["answer"]["answer"])
         st.write("Confidence: ", str(response["answer"]["score"]))
-
-
-    ### Example for connection to question answering api
-    #question = "what was the outcome?"
-    #text_type = "summ"
-    #key = 0
-    #url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
-    #response = requests.get(url).json()
-    #st.write("Question answer: ", response["answer"]["answer"], "\n Confidence: ", response["answer"]["score"])
-    ### End of example
