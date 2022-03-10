@@ -5,3 +5,4 @@ selenium
 streamlit
 gcsfs
 top2vec
+plotly
