@@ -1,6 +1,6 @@
 import streamlit as st
 from multiapp import MultiApp
-from pages import case_search, case_upload, year_select
+from pages import case_search, case_upload, year_select, graph_viz
 import os
 import sys
 import urllib.parse
@@ -17,15 +17,16 @@ import plotly.express as px
 
 
 
-class vis_app:
-    def app():
-        base_path = os.path.dirname(os.path.realpath(__file__))
-        csv_path = os.path.join(base_path, "graph_viz.csv")
-        clustering_data = pd.read_csv(csv_path)
-        button = st.button('Launch cluster')
-        if button:
-            fig = px.scatter_3d(clustering_data, x='x', y='y', z='z',color = clustering_data['labels'])
-            st.plotly_chart(fig)
+# class vis_app:
+#     def app():
+#         base_path = os.path.dirname(os.path.realpath(__file__))
+#         csv_path = os.path.join(base_path, "graph_viz.csv")
+#         clustering_data = pd.read_csv(csv_path)
+#         button = st.button('Launch cluster')
+#         print(len(clustering_data))
+#         if button:
+#             fig = px.scatter_3d(clustering_data, x='x', y='y', z='z',color = clustering_data['labels'])
+#             st.plotly_chart(fig)
 
 INDEX = 'uksc_data'
 PAGE_SIZE = 5
@@ -57,7 +58,7 @@ app = MultiApp()
 app.add_app('Select case from year', year_select.app)
 app.add_app('Search for a case by keyword', search.app)
 app.add_app('Upload your own text', case_upload.app)
-app.add_app('Clustering', vis_app.app)
+app.add_app('Clustering', graph_viz.app)
 #app.add_app('Question API Example', case_search.app)
 
 app.run()
