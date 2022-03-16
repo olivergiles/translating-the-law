@@ -1,12 +1,12 @@
 # Translating the Law
 ## Overview
-- Description: Translating the law is an exploration of NLP and deep learning
-techniques to try and summarise and simplify UK supreme court cases. The main
+- Description: Translating the Law is an exploration of NLP and deep learning
+techniques to summarise and simplify UK Supreme Court cases. The main
 frameworks and tools used were:
 1. Scraping: SCRAPY
 2. Summarisation model: BART
 3. Q&A model: BERT
-4. Case searcg: Elasticsearch
+4. Case search: Elasticsearch
 5. Clustering: top2vec
 6. Frontend: Streamlit
 7. Containerisation & composition: Docker and GCP
