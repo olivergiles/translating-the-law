@@ -6,6 +6,7 @@ import json
 import gcsfs
 import requests
 import os
+
 def open_from_bucket():
     gcs_file_system = gcsfs.GCSFileSystem()
     gcs_json_path = "gs://law-data-ogiles/data/simplified_data.json"
@@ -77,10 +78,10 @@ def app():
     new_q = st.text_input('Question: ', placeholder='Ask a question about this case')
     ask = st.button('Ask')
     if ask:
-        question = "What was the outcome?"
+        question = new_q
         text_type = "summ"
-        key = 23
-        url = f"https://uksc-question-app-jaefennyiq-ew.a.run.app/question?type={text_type}&key={key}&question={question}"
+        key = choose_index
+        url = f"https://localhost:8001//question?type={text_type}&key={key}&question={question}"
         response = requests.get(url).json()
         st.write("Question: ", question)
         st.write("Answer: ", response["answer"]["answer"])
