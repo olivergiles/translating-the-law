@@ -12,3 +12,6 @@ push_google_container:
 
 deploy_google_container:
 	@gcloud run deploy --image eu.gcr.io/${PROJECT_ID}/${DOCKER_IMAGE_NAME} --platform managed --region europe-west1 --memory 8Gi --cpu 2
+
+docker_run:
+	@docker run -e PORT=8001 -p 8001:8001 ${DOCKER_IMAGE_NAME}
