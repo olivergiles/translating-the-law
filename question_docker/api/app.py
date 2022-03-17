@@ -10,6 +10,7 @@ def index():
     return {"ok":True}
 
 @app.get("/question")
+
 def question(type, key, question):
     model = pipeline("question-answering", model="/models/questions-pretrained")
     if type == "full":

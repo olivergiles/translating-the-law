@@ -10,7 +10,7 @@ def app():
                         max_chars=None,
                         placeholder=None)
     if st.button('Enter'):
-        summary = requests.get(f'https://uskc-summarizer-app-jaefennyiq-ew.a.run.app/summary?text="{txt}"').\
+        summary = requests.get(f'https://localhost:8000//summary?text="{txt}"').\
             json()['summary']
         st.write('Summary: ', summary[0]["summary_text"])
     else:
