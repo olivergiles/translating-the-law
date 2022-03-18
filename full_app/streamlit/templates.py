@@ -118,6 +118,16 @@ def search_result(i: int, index: str, name: str, highlights: str,
                   date: str, citation: str, content:str, **kwargs) -> str:
     """ HTML scripts to display search results. """
     return f"""
+        <div style="font-size:120%;">
+        {i + 1}.
+        <a href="{index}">
+            {name}
+        </a>
+    </div>
+    <div style="font-size:95%;">
+        <div style="color:grey;font-size:95%;">
+            {index[:90] + '...' if len(index) > 100 else index}
+        </div>
         <div style="font-size:95%;">
             <div style="float:left;font-style:italic;">
                 {date} ·&nbsp;
