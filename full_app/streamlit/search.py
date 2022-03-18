@@ -68,12 +68,7 @@ def app():
             # search results
             for i in range(len(results['hits']['hits'])):
                 res = utils.simplify_es_result(results['hits']['hits'][i])
-                result_button = st.button(str(i + 1) + ": " + res['name'])
                 st.write(templates.search_result(i + from_i, **res),unsafe_allow_html=True)
-                if result_button:
-                    st.write("Button pressed")
-                else:
-                    pass
                 # render tags
                 tags_html = templates.tag_boxes(search, res['tags'],
                                                 st.session_state.tags)
